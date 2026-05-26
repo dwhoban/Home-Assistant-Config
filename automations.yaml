@@ -258,6 +258,22 @@
     id: HA Stop
   conditions: []
   actions:
+  - action: timer.cancel
+    metadata: {}
+    target:
+      entity_id:
+      - timer.fire05
+      - timer.fire30
+      - timer.fire45
+      - timer.fire15
+      - timer.fire60
+      - timer.fire360
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - choose:
     - conditions:
       - condition: trigger
@@ -329,6 +345,14 @@
     id: Stall
   - trigger: state
     entity_id:
+    - timer.fire360
+    from:
+    - idle
+    to:
+    - active
+    id: Stall
+  - trigger: state
+    entity_id:
     - timer.fire05
     from:
     - active
@@ -367,6 +391,14 @@
     to:
     - idle
     id: Run
+  - trigger: state
+    entity_id:
+    - timer.fire360
+    from:
+    - active
+    to:
+    - idle
+    id: Run
   conditions: []
   actions:
   - choose:
@@ -395,27 +427,60 @@
         control: false
   mode: single
 - id: '1770662161954'
-  alias: New automationFire Hourly Throttle
+  alias: Pellet Hourly Throttle
   description: Cuts the pellet feed on a schedule to prevent pellet build-up
   triggers:
   - trigger: time_pattern
     minutes: /12
     seconds: /12
+    id: TOTH
+    alias: TOTH
   - trigger: time_pattern
-    minutes: '32'
-    seconds: '32'
+    minutes: /32
+    seconds: /32
+    alias: BOTH
+    id: BOTH
   conditions:
   - condition: numeric_state
     entity_id: sensor.furnace_pellet_firebox_temperature
     below: 480
     above: 255
   - condition: time
-    after: 07:00:00
-    before: '22:00:00'
+    after: 04:30:18
+    before: '22:02:53'
+  - condition: state
+    entity_id: binary_sensor.thermopi_furnace_pellet_stove_disable_2
+    state:
+    - 'off'
   actions:
-  - action: timer.start
-    metadata: {}
-    target:
-      entity_id: timer.fire05
-    data: {}
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - BOTH
+      - condition: numeric_state
+        entity_id: sensor.gw2000b_v2_2_4_outdoor_temperature
+        above: 20
+      sequence:
+      - action: timer.start
+        metadata: {}
+        target:
+          entity_id: timer.fire05
+        data: {}
+    - conditions:
+      - condition: trigger
+        id:
+        - TOTH
+      sequence:
+      - action: timer.start
+        metadata: {}
+        target:
+          entity_id: timer.fire05
+        data: {}
+    default:
+    - action: timer.start
+      metadata: {}
+      target:
+        entity_id: timer.fire05
+      data: {}
   mode: single

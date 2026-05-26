@@ -69,7 +69,7 @@
       unit_of_measurement: "minutes"
       state: >-
         {{ states.sensor.compensation_sensor_gw2000b_v2_2_4_daily_rain_rate_piezo.state
-          | float(60) | abs }}
+          | float(120) | abs }}
       availability: >-
         {% from 'availability_template.jinja' import avail %}
         {{- avail(['sensor.compensation_sensor_gw2000b_v2_2_4_daily_rain_rate_piezo']) | bool -}}

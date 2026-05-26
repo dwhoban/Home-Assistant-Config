@@ -10,6 +10,7 @@
       - light.mom_light
       - light.livingroomlight
       - light.kitchensink
+      - light.kitchen_window
       - light.kitchen_down_lights
       - light.b_porch_socket
       - light.fp_socket
@@ -28,6 +29,7 @@
       - light.kneelight
       - light.kitchen_down_lights
       - light.kitchensink
+      - light.kitchen_window
 
   - platform: group
     name: Food Center
@@ -54,6 +56,7 @@
       - light.kneelight
       - light.jims_computer_light
       - light.kitchensink
+      - light.kitchen_window
       - light.memorial
 
   - platform: group

@@ -76,13 +76,16 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "light.kitchensink"
+                  "entity": "light.kitchen_window"
                 },
                 {
                   "entity": "light.jims_computer_light"
                 },
                 {
                   "entity": "light.cabinetlight"
+                },
+                {
+                  "entity": "light.kitchen_down_lights"
                 },
                 {
                   "entity": "light.stairway_switch"
@@ -174,10 +177,10 @@
                 "tap_action": {
                   "action": "more-info"
                 },
-                "entity": "sensor.ood_orb_ultra_battery_level",
+                "entity": "sensor.ood_orb_ultra_battery_level_2",
                 "icon": "",
                 "show_state": true,
-                "name": "Dads Phone"
+                "name": "Dads phone"
               }
             },
             {
@@ -240,6 +243,22 @@
               "state_color": true
             },
             {
+              "show_name": true,
+              "show_icon": true,
+              "type": "button",
+              "entity": "button.moms_button1",
+              "icon": "mdi:sleep",
+              "show_state": true,
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "button.press",
+                "target": {
+                  "entity_id": "button.moms_button1"
+                },
+                "data": {}
+              }
+            },
+            {
               "square": false,
               "columns": 2,
               "type": "grid",
@@ -278,9 +297,6 @@
                 },
                 {
                   "entity": "light.jens_light"
-                },
-                {
-                  "entity": "light.grp_jens_color"
                 }
               ],
               "show_header_toggle": false,
@@ -344,45 +360,6 @@
                 },
                 "theme": "Dark - Red"
               }
-            },
-            {
-              "show_name": true,
-              "show_icon": true,
-              "type": "button",
-              "tap_action": {
-                "action": "call-service",
-                "service": "input_boolean.turn_on",
-                "service_data": {},
-                "target": {
-                  "entity_id": [
-                    "input_boolean.pad_enable3"
-                  ]
-                }
-              },
-              "entity": "sensor.recycling",
-              "name": "All Locks - Tap Lock / Hold Unlock",
-              "icon": "mdi:lock",
-              "show_state": false,
-              "icon_height": "30px",
-              "hold_action": {
-                "action": "call-service",
-                "service": "input_boolean.turn_on",
-                "service_data": {},
-                "target": {
-                  "entity_id": "input_boolean.pad_enable2"
-                }
-              }
-            },
-            {
-              "type": "plant-status",
-              "entity": "plant.my_cemetery_plant",
-              "visibility": [
-                {
-                  "condition": "state",
-                  "entity": "plant.my_cemetery_plant",
-                  "state": "problem"
-                }
-              ]
             },
             {
               "type": "glance",
@@ -463,68 +440,12 @@
               ]
             },
             {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "thermostat",
-                  "entity": "climate.living_room_2",
-                  "features": [
-                    {
-                      "style": "dropdown",
-                      "hvac_modes": [
-                        "off",
-                        "heat"
-                      ],
-                      "type": "climate-hvac-modes"
-                    }
-                  ],
-                  "show_current_as_primary": true
-                },
-                {
-                  "graph": "line",
-                  "type": "sensor",
-                  "entity": "sensor.living_floor_temperature",
-                  "unit": "°F",
-                  "name": "Living Floor Temperature Avg",
-                  "detail": 2,
-                  "hours_to_show": 48
-                }
-              ],
-              "visibility": [
-                {
-                  "condition": "state",
-                  "entity": "climate.living_room_2",
-                  "state_not": "off"
-                }
-              ]
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "thermostat",
-                  "entity": "climate.gemodule5384_window_ac",
-                  "name": "Bedroom AC",
-                  "show_current_as_primary": true
-                },
-                {
-                  "hours_to_show": 24,
-                  "graph": "line",
-                  "type": "sensor",
-                  "entity": "sensor.gemodule5384_current_temperature",
-                  "name": "Bedroom Temperature",
-                  "unit": "°F",
-                  "detail": 2
-                },
-                {
-                  "hours_to_show": 24,
-                  "graph": "line",
-                  "type": "sensor",
-                  "entity": "sensor.bedroom_fan_si7021_temperature",
-                  "name": "Bedroom Ceiling Temperature",
-                  "detail": 2
-                }
-              ]
+              "graph": "line",
+              "type": "sensor",
+              "entity": "sensor.winix_dining_room_air_qvalue",
+              "detail": 2,
+              "hours_to_show": 48,
+              "icon": "mdi:weather-dust"
             },
             {
               "type": "entities",
@@ -582,7 +503,14 @@
               "entity": "sensor.aurora_visibility_visibility",
               "detail": 2,
               "theme": "Fluent Blue",
-              "hours_to_show": 24
+              "hours_to_show": 24,
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "sensor.aurora_visibility_visibility",
+                  "state_not": "0"
+                }
+              ]
             },
             {
               "graph": "line",
@@ -636,26 +564,6 @@
                 }
               ],
               "title": "ChaloupkaAbode Weather"
-            },
-            {
-              "type": "conditional",
-              "conditions": [
-                {
-                  "entity": "sensor.drain_the_compressor",
-                  "state": "today"
-                }
-              ],
-              "card": {
-                "type": "picture",
-                "image": "/local/images/compressor.webp",
-                "tap_action": {
-                  "action": "none"
-                },
-                "hold_action": {
-                  "action": "none"
-                },
-                "theme": "Dark - Light Red"
-              }
             },
             {
               "show_current": true,
@@ -963,17 +871,6 @@
               }
             },
             {
-              "type": "glance",
-              "entities": [
-                {
-                  "entity": "sensor.drain_the_compressor"
-                },
-                {
-                  "entity": "sensor.water_the_plants"
-                }
-              ]
-            },
-            {
               "type": "conditional",
               "conditions": [
                 {
@@ -1222,172 +1119,103 @@
               "theme": "Metro Red",
               "show_header_toggle": false,
               "state_color": true
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "media-control",
-                  "entity": "media_player.intercom_group"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.home_group"
-                }
-              ],
-              "columns": 2,
-              "square": false
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "media-control",
-                  "entity": "media_player.basement_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.bathroom_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.bedroom_firestick_air"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.bedroom_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.garage_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.jennys_room_display"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "button.press",
-                    "service_data": {},
-                    "target": {
-                      "entity_id": "button.stairs_up"
-                    }
-                  },
-                  "entity": "button.stairs_up",
-                  "name": "Bathroom Mute"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.google_mute",
-                    "service_data": {
-                      "entities": "media_player.bathroom_speaker",
-                      "status": false
-                    },
-                    "target": {}
-                  },
-                  "entity": "media_player.bathroom_speaker",
-                  "name": "Bathroom Unmute",
-                  "icon": "mdi:gesture-tap-button",
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "script.google_mute",
-                    "service_data": {
-                      "entities": "media_player.bedroom_speaker",
-                      "status": false
-                    },
-                    "target": {}
-                  }
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "button.press",
-                    "service_data": {},
-                    "target": {
-                      "entity_id": "button.stairs_up"
-                    }
-                  },
-                  "entity": "button.stairs_up",
-                  "name": "Bedroom Mute"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.google_mute",
-                    "service_data": {
-                      "entities": "media_player.bedroom_speaker",
-                      "status": false
-                    },
-                    "target": {}
-                  },
-                  "entity": "media_player.bathroom_speaker",
-                  "name": "Bedroom Unmute",
-                  "icon": "mdi:gesture-tap-button",
-                  "hold_action": {
-                    "action": "call-service",
-                    "service": "script.google_mute",
-                    "service_data": {
-                      "entities": "media_player.bathroom_speaker",
-                      "status": false
-                    },
-                    "target": {}
-                  }
-                }
-              ],
-              "square": false
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "media-control",
-                  "entity": "media_player.ecotv_a"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.fire_tv_192_168_108_232",
-                  "theme": "AMOLED Blue"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.jenny_s_tv"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.workroom_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.living_room_speaker"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.jennys_room_display"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.jennys_room_display"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.fire_tv_192_168_108_207",
-                  "theme": "Dark Pink"
-                }
-              ],
-              "columns": 2,
-              "square": false
             }
           ],
           "icon": "mdi:home-automation",
           "id": "home",
           "path": "default_view",
           "title": "Home"
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "HVAC",
+          "path": "hvac",
+          "theme": "Fluent Slate",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.living_room_2",
+                      "features": [
+                        {
+                          "style": "dropdown",
+                          "hvac_modes": [
+                            "off",
+                            "heat"
+                          ],
+                          "type": "climate-hvac-modes"
+                        }
+                      ],
+                      "show_current_as_primary": true
+                    },
+                    {
+                      "graph": "line",
+                      "type": "sensor",
+                      "entity": "sensor.living_floor_temperature",
+                      "unit": "°F",
+                      "name": "Living Floor Temperature Avg",
+                      "detail": 2,
+                      "hours_to_show": 48
+                    }
+                  ],
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "climate.living_room_2",
+                      "state_not": "off"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "thermostat",
+                      "entity": "climate.gemodule5384_window_ac",
+                      "name": "Bedroom AC",
+                      "show_current_as_primary": true
+                    },
+                    {
+                      "hours_to_show": 24,
+                      "graph": "line",
+                      "type": "sensor",
+                      "entity": "sensor.gemodule5384_current_temperature",
+                      "name": "Bedroom Temperature",
+                      "unit": "°F",
+                      "detail": 2
+                    },
+                    {
+                      "hours_to_show": 24,
+                      "graph": "line",
+                      "type": "sensor",
+                      "entity": "sensor.bedroom_fan_si7021_temperature",
+                      "name": "Bedroom Ceiling Temperature",
+                      "detail": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "cards": [],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "text_only": true,
+              "content": "# Thermostats\n"
+            }
+          }
         },
         {
           "badges": [],
@@ -1415,6 +1243,9 @@
                 },
                 {
                   "entity": "timer.fire60"
+                },
+                {
+                  "entity": "timer.fire360"
                 },
                 {
                   "entity": "script.pellet_feed_enable"
@@ -1468,11 +1299,13 @@
               "name": "Living Room"
             },
             {
+              "hours_to_show": 24,
               "graph": "line",
+              "entity": "sensor.furnace_return_temperature",
+              "theme": "Dark - Green",
               "type": "sensor",
-              "entity": "sensor.lrthermostat",
-              "detail": 1,
-              "name": "Living Room Thermostat"
+              "detail": 2,
+              "icon": "mdi:temperature-fahrenheit"
             },
             {
               "graph": "line",
@@ -1482,6 +1315,13 @@
               "type": "sensor",
               "detail": 1,
               "icon": "mdi:temperature-fahrenheit"
+            },
+            {
+              "graph": "line",
+              "type": "sensor",
+              "entity": "sensor.lrthermostat",
+              "detail": 1,
+              "name": "Living Room Thermostat"
             },
             {
               "type": "sensor",
@@ -1497,15 +1337,6 @@
               "type": "sensor",
               "detail": 2,
               "icon": "mdi:stove"
-            },
-            {
-              "hours_to_show": 24,
-              "graph": "line",
-              "entity": "sensor.furnace_return_temperature",
-              "theme": "Dark - Green",
-              "type": "sensor",
-              "detail": 2,
-              "icon": "mdi:temperature-fahrenheit"
             },
             {
               "entity": "sensor.bedroom_fan_si7021_temperature",
@@ -2958,14 +2789,6 @@
               "forecast_type": "daily"
             },
             {
-              "type": "entity",
-              "entity": "sensor.control_central_uv_index",
-              "attribute": "level",
-              "name": "Sunburn Risk",
-              "icon": "mdi:sun-wireless-outline",
-              "state_color": false
-            },
-            {
               "chart_type": "line",
               "period": "hour",
               "type": "statistics-graph",
@@ -2981,29 +2804,8 @@
               ],
               "title": "Soil Moisture",
               "days_to_show": 21,
-              "hide_legend": true,
+              "hide_legend": false,
               "logarithmic_scale": true
-            },
-            {
-              "type": "gauge",
-              "entity": "sensor.control_central_uv_index_today",
-              "needle": true,
-              "name": "Chance of Sunburn",
-              "unit": "UV-Index",
-              "max": 9,
-              "min": 1,
-              "visibility": [
-                {
-                  "condition": "numeric_state",
-                  "entity": "sensor.control_central_uv_index_today",
-                  "above": 2
-                }
-              ],
-              "severity": {
-                "green": 2,
-                "yellow": 5,
-                "red": 7
-              }
             },
             {
               "type": "gauge",
@@ -3015,7 +2817,7 @@
               },
               "needle": true,
               "min": 0,
-              "max": 60,
+              "max": 120,
               "unit": "minutes",
               "name": "Rolling Sprinkler for Tomorrow",
               "visibility": [
@@ -3029,7 +2831,7 @@
             {
               "type": "gauge",
               "entity": "input_number.sprinkler_time",
-              "max": 60,
+              "max": 120,
               "needle": true,
               "unit": "minutes",
               "name": "Sprinkler This Morning",
@@ -3093,6 +2895,9 @@
                 },
                 {
                   "entity": "binary_sensor.mailbox"
+                },
+                {
+                  "entity": "switch.0xa4c138f8d7d96103"
                 }
               ],
               "title": "ChaloupkaAbode Weather",
@@ -3160,6 +2965,200 @@
           "id": "exterior",
           "path": "exterior",
           "title": "Exterior"
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Media",
+          "path": "media",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "grid",
+                  "cards": [
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.ecotv_a"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.fire_tv_192_168_108_232",
+                      "theme": "AMOLED Blue"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.jenny_s_tv"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.workroom_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.living_room_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.jennys_room_display"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.jennys_room_display"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.fire_tv_192_168_108_207",
+                      "theme": "Dark Pink"
+                    }
+                  ],
+                  "columns": 2,
+                  "square": false
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "grid",
+                  "cards": [
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.intercom_group"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.home_group"
+                    }
+                  ],
+                  "columns": 2,
+                  "square": false
+                },
+                {
+                  "show_name": true,
+                  "show_icon": true,
+                  "type": "button",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/remotes"
+                  },
+                  "icon": "mdi:remote-tv",
+                  "name": "Remotes",
+                  "show_state": false
+                },
+                {
+                  "type": "grid",
+                  "cards": [
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.basement_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.bathroom_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.bedroom_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.garage_speaker"
+                    },
+                    {
+                      "type": "media-control",
+                      "entity": "media_player.jennys_room_display"
+                    },
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {},
+                        "target": {
+                          "entity_id": "button.stairs_up"
+                        }
+                      },
+                      "entity": "button.stairs_up",
+                      "name": "Bathroom Mute"
+                    },
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.google_mute",
+                        "service_data": {
+                          "entities": "media_player.bathroom_speaker",
+                          "status": false
+                        },
+                        "target": {}
+                      },
+                      "entity": "media_player.bathroom_speaker",
+                      "name": "Bathroom Unmute",
+                      "icon": "mdi:gesture-tap-button",
+                      "hold_action": {
+                        "action": "call-service",
+                        "service": "script.google_mute",
+                        "service_data": {
+                          "entities": "media_player.bedroom_speaker",
+                          "status": false
+                        },
+                        "target": {}
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "button.press",
+                        "service_data": {},
+                        "target": {
+                          "entity_id": "button.stairs_up"
+                        }
+                      },
+                      "entity": "button.stairs_up",
+                      "name": "Bedroom Mute"
+                    },
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.google_mute",
+                        "service_data": {
+                          "entities": "media_player.bedroom_speaker",
+                          "status": false
+                        },
+                        "target": {}
+                      },
+                      "entity": "media_player.bathroom_speaker",
+                      "name": "Bedroom Unmute",
+                      "icon": "mdi:gesture-tap-button",
+                      "hold_action": {
+                        "action": "call-service",
+                        "service": "script.google_mute",
+                        "service_data": {
+                          "entities": "media_player.bathroom_speaker",
+                          "status": false
+                        },
+                        "target": {}
+                      }
+                    }
+                  ],
+                  "square": false
+                }
+              ]
+            }
+          ],
+          "cards": [],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "text_only": true,
+              "content": "# Media"
+            }
+          }
         },
         {
           "badges": [],
@@ -4546,7 +4545,8 @@
                 "perform_action": "switch.turn_on",
                 "target": {
                   "entity_id": "switch.bambino_switch"
-                }
+                },
+                "data": {}
               },
               "entity": "switch.bambino_switch",
               "icon": "mdi:bat",
@@ -4555,10 +4555,8 @@
               "icon_height": "60px",
               "hold_action": {
                 "action": "perform-action",
-                "perform_action": "switch.turn_off",
-                "target": {
-                  "entity_id": "switch.bambino_switch"
-                }
+                "perform_action": "",
+                "target": {}
               },
               "theme": "Dark Green"
             },
@@ -4708,414 +4706,6 @@
               "icon": "mdi:remote",
               "icon_height": "80px",
               "theme": "Dark - Blue"
-            },
-            {
-              "type": "custom:firemote-card",
-              "entity": "media_player.android_tv_192_168_108_205",
-              "device_family": "nvidia-shield",
-              "device_type": "shield-tv-pro-2019",
-              "compatibility_mode": "default",
-              "android_tv_remote_entity": "",
-              "app_launch_1": "youtube",
-              "visible_name_text": "Farg",
-              "name_position": "top"
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "entity": "script.br_power",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "icon_height": "-50px",
-                  "theme": "Dark - Red"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "name": "BlueRay Panel"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_eject",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_play",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_menu",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_stop",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_back",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple",
-                  "entity": "script.br_up",
-                  "icon": "mdi:arrow-up"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_home",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_left",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_enter",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_right",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_skip_up",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_down",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_pause",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_scan_up",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple",
-                  "name": "Scan up"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_skip_down",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_repeat",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.br_scan_down",
-                  "icon_height": "-50px",
-                  "theme": "Dark - Blue/Purple",
-                  "name": "Scan down"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "theme": "Dark - Blue/Purple",
-                  "icon_height": "50px"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "theme": "Dark - Blue/Purple",
-                  "icon": ""
-                }
-              ],
-              "square": false
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_mecool",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "name": "MeCool Panel",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "entity": "script.mc_power",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "icon_height": "-50px",
-                  "theme": "Dark - Red"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_skip_back",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_e",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_volume_up",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_skip_forward",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_mute",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_volume_down",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_home",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_vert_up",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_back",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_horz_left",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_ok",
-                  "name": "OK",
-                  "icon": "mdi:hand-okay",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_horz_right",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_hamburger",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_vert_down",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.mc_mouse",
-                  "icon_height": "-50px",
-                  "theme": "material_dark_green"
-                }
-              ],
-              "square": false
-            },
-            {
-              "type": "custom:firemote-card",
-              "entity": "media_player.fire_tv_192_168_108_232",
-              "device_type": "fire_tv_4_series",
-              "compatibility_mode": "default",
-              "app_launch_1": "youtube",
-              "app_launch_2": "netflix",
-              "app_launch_3": "disney-plus",
-              "app_launch_4": "hulu",
-              "app_launch_5": "paramount-plus",
-              "app_launch_6": "prime-video",
-              "scale": "90",
-              "visible_name_text": "LR Remote",
-              "name_position": "top"
             }
           ]
         },
@@ -5284,175 +4874,29 @@
               "title": "System ON OFF Multi Scripts"
             },
             {
-              "type": "custom:firemote-card",
-              "entity": "media_player.fire_tv_192_168_108_207",
-              "device_family": "amazon-fire",
-              "device_type": "fire_tv_stick_4k_max",
-              "compatibility_mode": "default",
-              "app_launch_1": "paramount-plus",
-              "app_launch_2": "peacock",
-              "app_launch_4": "netflix",
-              "app_launch_3": "plex",
-              "visible_name_text": "JEN'S",
-              "name_position": "top",
-              "visible_name_text_color": "#ffa348",
-              "scale": "120"
+              "show_name": true,
+              "show_icon": true,
+              "type": "button",
+              "tap_action": {
+                "action": "navigate",
+                "navigation_path": "/lovelace/remote-pg2"
+              },
+              "name": "Other Remotes",
+              "icon": "mdi:remote-off",
+              "icon_height": "80px",
+              "theme": "Fluent Blue"
             },
             {
-              "square": false,
-              "type": "grid",
-              "cards": [
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_vol_up",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange",
-                  "entity": "script.vizio_j_vol_up"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "name": "Jens TV Panel",
-                  "theme": "Metro Red"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_ch_up",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_ch_up",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_vol_down",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_vol_down",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_power",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_power",
-                  "icon_height": "50px",
-                  "theme": "Dark Pink"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_ch_down",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_ch_down",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_mute",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_mute",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_hdmi",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_hdmi",
-                  "icon_height": "50px",
-                  "theme": "Dark Green"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_tv",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_tv",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_input",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_input",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "switch.chromecast_reset",
-                  "icon_height": "50px",
-                  "theme": "Dark - Red"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.vizio_j_av",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.vizio_j_av",
-                  "icon_height": "50px",
-                  "theme": "Dark - Orange"
-                }
-              ],
-              "title": "Jens TV Panel"
+              "show_name": true,
+              "show_icon": true,
+              "type": "button",
+              "tap_action": {
+                "action": "navigate",
+                "navigation_path": "/lovelace/media"
+              },
+              "name": "MEDIA",
+              "icon": "mdi:multimedia",
+              "icon_height": "80px"
             },
             {
               "type": "entities",
@@ -5471,265 +4915,19 @@
               "state_color": true
             },
             {
-              "square": false,
-              "type": "grid",
-              "cards": [
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_mute",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_mute",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "name": "Denon Reciever Panel",
-                  "theme": "Metro Red",
-                  "icon_height": "50px"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_volume_up",
-                  "theme": "Dark Blue",
-                  "icon_height": "50px"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_firetv",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_firetv",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_power",
-                  "theme": "Dark Pink",
-                  "icon_height": "50px",
-                  "icon": "mdi:power"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_volume_down",
-                  "icon_height": "50px",
-                  "theme": "Dark Blue"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_chromecast",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_chromecast",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_tv_audio",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_tv_audio",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_blue_ray",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_mecool",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_mecool",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_tuner",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "entity": "script.denon_tune",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": true,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_firetv",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_tune_search",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_blue_ray",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_reciever_band",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_multeq_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_multeq_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_d_st_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_d_st_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_a_dsx_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_a_dsx_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_simulation_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_simulation_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_standard_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_standard_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "show_name": true,
-                  "show_icon": false,
-                  "type": "button",
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "theme": "Navy Blue & Yellow"
-                },
-                {
-                  "type": "button",
-                  "tap_action": {
-                    "action": "call-service",
-                    "service": "script.denon_pure_out",
-                    "service_data": {},
-                    "target": {}
-                  },
-                  "entity": "script.denon_pure_out",
-                  "icon_height": "50px",
-                  "theme": "Navy Blue & Yellow"
-                }
-              ],
-              "title": "Stereo Radio Panel (Set Volume HERE)"
-            },
-            {
-              "show_name": true,
-              "show_icon": true,
-              "type": "button",
-              "tap_action": {
-                "action": "navigate",
-                "navigation_path": "/lovelace/remote-pg2"
-              },
-              "name": "Other Remotes",
-              "icon": "mdi:remote-off",
-              "icon_height": "80px",
-              "theme": "Fluent Blue"
+              "type": "custom:firemote-card",
+              "entity": "media_player.fire_tv_192_168_108_232",
+              "device_type": "fire_tv_4_series",
+              "compatibility_mode": "default",
+              "app_launch_1": "youtube",
+              "app_launch_2": "netflix",
+              "app_launch_3": "disney-plus",
+              "app_launch_4": "hulu",
+              "app_launch_5": "paramount-plus",
+              "app_launch_6": "prime-video",
+              "scale": "90",
+              "visible_name_text": "LR Remote",
+              "name_position": "top"
             }
           ]
         }

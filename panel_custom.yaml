@@ -1,17 +1,16 @@
 ---
-  - name: ha_supervisor
+  - name: config/apps
     sidebar_title: Supervisor
     sidebar_icon: mdi:home-assistant
-    js_url: /api/hassio/app/entrypoint.js
-    url_path: 'hassio/dashboard'
+    module_url: 'http://10.10.100.8:8123/config/apps'
     embed_iframe: true
     require_admin: true
     config:
-      ingress: Supervisor
+      ingress: Apps
   - name: config/logs
     sidebar_title: Logs
     sidebar_icon: mdi:math-log
-    module_url: https://10.10.100.8:8123/config/logs
+    module_url: 'http://10.10.100.8:8123/config/logs'
     embed_iframe: true
     require_admin: true
     config:
@@ -19,7 +18,7 @@
   - name: config/system
     sidebar_title: System
     sidebar_icon: mdi:cog
-    module_url: 'https://10.10.100.8:8123/config/system'
+    module_url: 'http://10.10.100.8:8123/config/system'
     embed_iframe: true
     require_admin: true
     config:
@@ -27,7 +26,7 @@
   - name: config/integrations/integration/zha
     sidebar_title: ZHA
     sidebar_icon: mdi:zigbee
-    module_url: http://10.10.100.8:8123/config/integrations/integration/zha
+    module_url: 'http://10.10.100.8:8123/config/integrations/integration/zha'
     embed_iframe: true
     require_admin: true
     config:
@@ -36,7 +35,7 @@
   - name: config/developer-tools
     sidebar_title: Tools
     sidebar_icon: mdi:hammer-wrench
-    module_url: 'https://10.10.100.8:8123/developer-tools'
+    module_url: 'http://10.10.100.8:8123/developer-tools'
     embed_iframe: true
     require_admin: true
     config:
